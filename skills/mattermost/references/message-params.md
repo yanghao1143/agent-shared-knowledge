@@ -1,62 +1,53 @@
 # Message Tool Parameters (Mattermost)
 
-## action: send
+## Core Parameters
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `action` | ✅ | `"send"` |
-| `channel` | ✅ | `"mattermost"` |
-| `message` | ❌ | Text content |
-| `filePath` | ❌ | Local file to upload |
-| `target` | ❌ | Channel/user ID (auto if in chat) |
-| `replyTo` | ❌ | Message ID to reply to |
-| `silent` | ❌ | Suppress notifications |
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `action` | string | ✅ | `send` or `broadcast` |
+| `channel` | string | ✅ | `mattermost` |
+| `target` | string | ✅ | Channel ID, `user:<id>`, or `@username` |
+| `message` | string | ⚠️ | Text content (optional if filePath) |
+| `filePath` | string | ❌ | Local file path to send |
 
-**Note:** Either `message` or `filePath` required.
+## File Sending
 
-## action: broadcast
+```
+message action=send channel=mattermost target=<id> filePath=/path/to/file.md
+```
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `action` | ✅ | `"broadcast"` |
-| `channel` | ✅ | `"mattermost"` |
-| `message` | ✅ | Text content |
-| `targets` | ✅ | Array of channel/user IDs |
+- Supports any file type
+- Caption via `message` parameter (optional)
+- File is uploaded as attachment
 
 ## Target Resolution
 
+1. **Bare ID** → treated as channel
+2. **`channel:<id>`** → explicit channel
+3. **`user:<id>`** → DM to user by ID
+4. **`@username`** → DM resolved via API
+
+## Broadcast
+
+Send to multiple targets:
 ```
-channel_id          → channel:channel_id
-channel:id          → channel:id
-user:id             → DM to user
-@username           → DM (resolved via API)
-```
-
-## File Types
-
-Mattermost accepts most file types:
-- Documents: `.md`, `.txt`, `.pdf`, `.docx`
-- Code: `.py`, `.js`, `.ts`, `.json`, `.yaml`
-- Images: `.png`, `.jpg`, `.gif`
-- Archives: `.zip`, `.tar.gz`
-
-## Response
-
-```json
-{
-  "channel": "mattermost",
-  "to": "channel:abc123",
-  "result": {
-    "messageId": "msg_id",
-    "channelId": "abc123"
-  }
-}
+message action=broadcast channel=mattermost targets=["id1","id2"] message="Hello all"
 ```
 
-## Common Errors
+## Reply to Message
 
-| Error | Cause | Fix |
-|-------|-------|-----|
-| `target required` | No target specified | Add `target` param |
-| `file not found` | Invalid `filePath` | Check file exists |
-| `permission denied` | Bot not in channel | Add bot to channel |
+```
+message action=send channel=mattermost target=<id> message="Reply" replyTo=<messageId>
+```
+
+## Reactions
+
+```
+message action=send channel=mattermost target=<id> messageId=<id> emoji=👍
+```
+
+## Notes
+
+- Mattermost supports Markdown tables (Discord/WhatsApp don't)
+- No inline buttons unless `mattermost.capabilities.inlineButtons` is set
+- Rate limits apply per bot token

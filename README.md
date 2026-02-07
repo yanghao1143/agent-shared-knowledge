@@ -1,144 +1,33 @@
-# Chi Code 🇨🇳
+# Agent Shared Knowledge
 
-**基于 Zed 的高性能中文代码编辑器**
+OpenClaw Agents 共享知识库 - 技术教训、脚本、技能
 
-[功能特性](#-功能特性) • [安装使用](#-安装使用) • [开发进度](#-开发进度) • [参与贡献](#-参与贡献)
+## 结构
 
----
+```
+/
+├── lessons/     # 技术教训（按日期）
+├── scripts/     # 共享脚本
+├── skills/      # 自定义 skills
+└── issues/      # issue 草稿
+```
 
-## ✨ 功能特性
+## 贡献者
 
-Chi Code 是 [Zed](https://zed.dev) 编辑器的中文深度定制版，专为中文开发者打造。
+- 好大儿 (maintainer)
+- @oldking
+- @employee1
+- @employee2
 
-| 特性 | 描述 |
-|------|------|
-| 🌏 **完整中文界面** | 菜单、设置、提示、错误信息全部中文化 |
-| ⚡ **极致性能** | GPU 加速渲染，启动快、响应快 |
-| 🤖 **AI 原生集成** | 内置 AI 助手，支持多种模型 |
-| 👥 **实时协作** | 多人同时编辑，语音通话 |
-| 🎨 **现代 UI** | 简洁美观，支持自定义主题 |
+## 如何贡献
 
-## 🚀 安装使用
+1. Fork 或直接 clone（有权限的话）
+2. 创建分支：`git checkout -b feature/xxx`
+3. 提交更改
+4. 创建 PR
 
-### 从源码构建
+## 配置 remote
 
 ```bash
-# 克隆仓库
-git clone https://github.com/yanghao1143/AI-code-generation.git
-cd AI-code-generation
-
-# 安装依赖 (Windows)
-# 需要: Rust, Visual Studio Build Tools, CMake
-
-# 构建
-cargo build --release
-
-# 运行
-./target/release/chi-code
+git remote add shared https://<token>@github.com/yanghao1143/agent-shared-knowledge.git
 ```
-
-### 系统要求
-
-- **操作系统**: Windows 10/11, macOS 12+, Linux
-- **内存**: 8GB+ 推荐
-- **显卡**: 支持 Vulkan/Metal/DirectX 12
-
-## 📊 开发进度
-
-### 国际化 (i18n) 进度
-
-当前进度: **~54%** (4625/8605 条)
-
-| 模块 | 状态 | 说明 |
-|------|:----:|------|
-| workspace | ✅ | 工作区管理 |
-| project_panel | ✅ | 项目面板 |
-| title_bar | ✅ | 标题栏 |
-| debugger_ui | ✅ | 调试器界面 |
-| git_ui | ✅ | Git 界面 |
-| search | ✅ | 搜索功能 |
-| collab_ui | ✅ | 协作界面 |
-| terminal_view | ✅ | 终端视图 |
-| settings_ui | ✅ | 设置界面 |
-| editor | ✅ | 编辑器核心 |
-| diagnostics | ✅ | 诊断信息 |
-| repl | ✅ | REPL 交互 |
-| agent_ui | 🚧 | AI 助手界面 |
-| assistant | 🚧 | 助手功能 |
-
-### 三 Agent 协作系统
-
-本项目使用 OpenClaw 驱动的三模型协作系统进行开发：
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    OpenClaw (指挥官/编排者)                   │
-│  - 任务规划与分解                                             │
-│  - 代码审核与合并                                             │
-│  - 质量把关与验收                                             │
-├─────────────────────────────────────────────────────────────┤
-│         Claude CLI              │         Gemini CLI         │
-│    (后端/逻辑/算法权威)          │    (前端/UI/设计权威)        │
-├─────────────────────────────────────────────────────────────┤
-│                         Codex CLI                            │
-│                    (修复/测试/清理权威)                        │
-└─────────────────────────────────────────────────────────────┘
-```
-
-**自动化能力**:
-- ✅ Agent 健康检查与自动恢复
-- ✅ 死锁检测与恢复机制
-- ✅ 上下文溢出监控
-- ✅ 智能任务分配
-- ✅ 自动派活系统
-
-### 最近更新
-
-- **2026-02-02**: 进化系统 v5.4，新增日志分析器和自动优化器
-- **2026-02-02**: 完成 repl、git_ui、agent_ui 模块翻译
-- **2026-02-01**: 三 Agent 协作系统上线
-
-## 🛠️ 技术架构
-
-```
-Chi Code
-├── crates/
-│   ├── i18n/           # 国际化核心
-│   │   └── locales/
-│   │       └── zh-CN/  # 中文翻译文件
-│   ├── editor/         # 编辑器核心
-│   ├── workspace/      # 工作区管理
-│   ├── ui/             # UI 组件库
-│   └── ...
-├── scripts/            # 自动化脚本 (44个)
-└── docs/               # 文档
-```
-
-## 🤝 参与贡献
-
-欢迎贡献代码、翻译或反馈问题！
-
-1. Fork 本仓库
-2. 创建特性分支 (`git checkout -b feature/amazing-feature`)
-3. 提交更改 (`git commit -m 'Add amazing feature'`)
-4. 推送到分支 (`git push origin feature/amazing-feature`)
-5. 提交 Pull Request
-
-### 翻译贡献
-
-翻译文件位于 `crates/i18n/locales/zh-CN/main.ftl`，使用 [Fluent](https://projectfluent.org/) 格式。
-
-## 📬 联系方式
-
-- **QQ**: 3257138054
-- **Issues**: [GitHub Issues](https://github.com/yanghao1143/AI-code-generation/issues)
-
-## 📄 许可证
-
-本项目基于 [GPL-3.0](LICENSE-GPL) 许可证开源。
-
----
-
-<p align="center">
-  <sub>Made with ❤️ by Chi Code Team</sub>
-</p>

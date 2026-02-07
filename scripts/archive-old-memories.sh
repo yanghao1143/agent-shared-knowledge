@@ -68,5 +68,5 @@ $content" 2>/dev/null || echo "")
 done
 
 log "✅ 归档完成！"
-log "  归档目录: $ARCHIVE_DIR"
-log "  摘要已追加到: $MEMORY_FILE"
+log "   归档目录: $ARCHIVE_DIR"
+log "   摘要已追加到: $MEMORY_FILE"

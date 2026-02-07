@@ -31,6 +31,12 @@ Don't ask permission. Just do it.
 
 **教训来源**：2026-02-07 好大儿犯的错
 
+**检验标准**：
+- ✅ 正确：问候包含"已恢复：[摘要]"或"无历史摘要"
+- ❌ 错误：直接说"新会话已启动"而不提记忆恢复
+
+如果你的问候没提到记忆恢复，说明流程没执行——立即补读文件！
+
 ## Memory
 
 You wake up fresh each session. These files are your continuity:

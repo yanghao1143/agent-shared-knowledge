@@ -20,6 +20,7 @@
 ## 一、回复精简技巧
 
 ### 该说什么
+
 ✅ **直接回答问题**
 ✅ **必要的解释**（用户需要理解的）
 ✅ **关键步骤**（复杂任务）
@@ -27,6 +28,7 @@
 ✅ **确认信息**（重要操作前）
 
 ### 不该说什么
+
 ❌ **"Great question!"** - 废话
 ❌ **"I'd be happy to help!"** - 废话
 ❌ **"Let me think about this..."** - 废话
@@ -38,7 +40,10 @@
 
 **❌ 浪费 token 的回复：**
 ```
-Great question! I'd be happy to help you with that. Let me read the file for you. I'm going to use the read tool to access the contents of the file you mentioned. Here's what I found...
+Great question! I'd be happy to help you with that. 
+Let me read the file for you. I'm going to use the 
+read tool to access the contents of the file you 
+mentioned. Here's what I found...
 ```
 
 **✅ 精简回复：**
@@ -87,9 +92,9 @@ OpenClaw 自动修剪旧的工具输出：
 ```json5
 {
   agent: {
-    contextPruning: {
-      mode: "cache-ttl",
-      ttl: "5m"
+    contextPruning: { 
+      mode: "cache-ttl", 
+      ttl: "5m" 
     }
   }
 }
@@ -106,18 +111,39 @@ OpenClaw 自动修剪旧的工具输出：
 ## 三、避免 Token 浪费的常见陷阱
 
 ### 陷阱 1：读取整个大文件
-**❌ 错误**：read entire 50000 line file
-**✅ 正确**：read file with limit=100, offset=1
+
+**❌ 错误**：
+```
+read entire 50000 line file
+```
+
+**✅ 正确**：
+```
+read file with limit=100, offset=1
+```
 
 ### 陷阱 2：工具输出不截断
-**❌ 错误**：exec: ls -la /
-**✅ 正确**：exec: ls -la / | head -50
+
+**❌ 错误**：
+```
+exec: ls -la /  # 输出可能很长
+```
+
+**✅ 正确**：
+```
+exec: ls -la / | head -50
+```
 
 ### 陷阱 3：重复读取相同内容
-**❌ 错误**：每次都重新读取配置文件
-**✅ 正确**：读一次，记住关键信息
+
+**❌ 错误**：
+每次都重新读取配置文件
+
+**✅ 正确**：
+读一次，记住关键信息
 
 ### 陷阱 4：不必要的确认
+
 **❌ 错误**：
 ```
 我要读取文件了
@@ -133,7 +159,9 @@ OpenClaw 自动修剪旧的工具输出：
 ```
 
 ### 陷阱 5：过长的 System Prompt
+
 **问题**：workspace 文件太大
+
 **解决**：
 - 保持 AGENTS.md, SOUL.md 等文件精简
 - 大内容放到单独文件，按需读取
@@ -158,7 +186,13 @@ Anthropic 等提供商会缓存 system prompt：
 
 2. **Heartbeat 保持缓存热度**
    ```json5
-   heartbeat: { every: "55m" }  // 略小于 cache TTL
+   {
+     agents: {
+       defaults: {
+         heartbeat: { every: "55m" }  // 略小于 cache TTL
+       }
+     }
+   }
    ```
 
 3. **Cache-TTL Pruning**
@@ -170,16 +204,19 @@ Anthropic 等提供商会缓存 system prompt：
 ## 五、实用 Checklist
 
 ### 每次回复前检查
+
 - [ ] 是否有废话可以删除？
 - [ ] 工具调用需要解释吗？（大多数不需要）
 - [ ] 输出是否可以更精简？
 
 ### 每个会话检查
+
 - [ ] 上下文是否过大？（`/status` 查看）
 - [ ] 需要 `/compact` 吗？
 - [ ] 有重复读取的内容吗？
 
 ### 配置检查
+
 - [ ] contextPruning 是否启用？
 - [ ] heartbeat 是否配置？
 - [ ] workspace 文件是否精简？
@@ -188,21 +225,12 @@ Anthropic 等提供商会缓存 system prompt：
 
 ## 六、监控工具
 
-```bash
-# 查看上下文使用率
-/status
-
-# 查看各部分大小
-/context list
-
-# 详细分解
-/context detail
-
-# 每条回复显示 token
-/usage tokens
-
-# 显示 token + 成本
-/usage full
+```
+/status          # 查看上下文使用率
+/context list    # 查看各部分大小
+/context detail  # 详细分解
+/usage tokens    # 每条回复显示 token
+/usage full      # 显示 token + 成本
 ```
 
 ---

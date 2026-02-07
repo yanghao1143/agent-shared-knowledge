@@ -19,7 +19,6 @@
 ## 模型能力分层
 
 ### 🏆 Tier 1: 旗舰推理模型（最贵）
-
 **代表**: Claude Opus 4.5/4.6, GPT-5.2, Gemini 3 Pro, Grok 4
 
 **适用场景**:
@@ -37,7 +36,6 @@
 - 涉及复杂逻辑链
 
 ### 🥈 Tier 2: 主力工作模型（性价比）
-
 **代表**: Claude Sonnet 4.5, GPT-5, Gemini 2.5 Flash, Kimi K2.5
 
 **适用场景**:
@@ -55,7 +53,6 @@
 - 批量处理
 
 ### 🥉 Tier 3: 轻量快速模型（便宜）
-
 **代表**: Claude Haiku 4.5, GPT-4.1 mini, Gemini Flash-Lite, GLM-4.7-Flash
 
 **适用场景**:
@@ -73,7 +70,6 @@
 - 成本敏感场景
 
 ### 🆓 Tier 4: 免费/本地模型
-
 **代表**: Llama 3.3 70B, Qwen3 235B, DeepSeek V3, Ollama 本地模型
 
 **适用场景**:
@@ -217,24 +213,24 @@
 
 ## 实用技巧
 
-1. **动态切换**
-   ```
-   /model opus    # 临时切换到 Opus 处理复杂任务
-   /model sonnet  # 切回 Sonnet
-   ```
+### 1. 动态切换
+```
+/model opus    # 临时切换到 Opus 处理复杂任务
+/model sonnet  # 切回 Sonnet
+```
 
-2. **子任务降级**
-   用 `sessions_spawn` 时指定便宜模型：
-   ```
-   sessions_spawn(task="简单任务", model="anthropic/claude-haiku-4-5")
-   ```
+### 2. 子任务降级
+用 `sessions_spawn` 时指定便宜模型：
+```
+sessions_spawn(task="简单任务", model="anthropic/claude-haiku-4-5")
+```
 
-3. **失败重试升级**
-   简单任务先用便宜模型，失败了再用贵的
+### 3. 失败重试升级
+简单任务先用便宜模型，失败了再用贵的
 
-4. **缓存利用**
-   - 保持会话连续性，利用 prompt cache
-   - Heartbeat 保持缓存热度
+### 4. 缓存利用
+- 保持会话连续性，利用 prompt cache
+- Heartbeat 保持缓存热度
 
 ---
 
@@ -257,4 +253,4 @@
 
 ---
 
-_参考来源: OpenClaw 文档, Artificial Analysis 模型对比_
+*参考来源: OpenClaw 文档, Artificial Analysis 模型对比*

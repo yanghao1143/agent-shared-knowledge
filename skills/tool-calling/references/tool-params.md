@@ -5,7 +5,6 @@ Complete parameter reference for OpenClaw tools.
 ## File Operations
 
 ### read
-
 Read file contents.
 
 | Parameter | Required | Description |
@@ -22,7 +21,6 @@ Read file contents.
 ```
 
 ### write
-
 Create or overwrite file.
 
 | Parameter | Required | Description |
@@ -38,7 +36,6 @@ Create or overwrite file.
 ```
 
 ### edit
-
 Replace exact text in file.
 
 | Parameter | Required | Description |
@@ -63,7 +60,6 @@ Replace exact text in file.
 ## Command Execution
 
 ### exec
-
 Run shell command.
 
 | Parameter | Required | Description |
@@ -84,15 +80,29 @@ Run shell command.
 
 | Expected Output | Strategy |
 |-----------------|----------|
-| < 100 lines | Direct output OK |
-| 100-500 lines | Use `limit` parameter |
-| > 500 lines | Write to file, then read with limit |
+| < 100 lines | Direct exec |
+| 100-500 lines | Use `head -N` or `tail -N` |
+| > 500 lines | Redirect to file, read with limit |
+
+### Redirect Pattern
+```bash
+command > /tmp/output.txt 2>&1
+```
+
+Then read:
+```xml
+<invoke name="read">
+  <parameter name="file_path">/tmp/output.txt</parameter>
+  <parameter name="limit">100</parameter>
+</invoke>
+```
 
 ## Common Mistakes
 
-| Wrong | Correct |
-|-------|---------|
-| `path` | `file_path` |
-| `old_text` | `old_string` |
-| `new_text` | `new_string` |
-| `file` | `file_path` |
+| Mistake | Fix |
+|---------|-----|
+| `path` instead of `file_path` | Use `file_path` |
+| `oldText` instead of `old_string` | Use `old_string` |
+| `newText` instead of `new_string` | Use `new_string` |
+| Large output in context | Redirect to file |
+| Whitespace mismatch in edit | Copy exact text |

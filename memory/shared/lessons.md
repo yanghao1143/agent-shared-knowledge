@@ -1,37 +1,37 @@
-# 技术教训 (Lessons Learned)
+# 技术教训
 
-> 跨频道共享的技术教训，每次会话都应加载
+> 跨频道共享的技术知识，所有会话都加载
 
-## 工具调用
+## 工具参数
 
-### 参数名
-- `read`: 用 `file_path`（`path` 也行但不推荐）
-- `write`: **必须用 `file_path`**（`path` 不行！）
-- `edit`: 用 `file_path` + `old_string` + `new_string`
+| 工具 | 正确参数 | 错误参数 |
+|------|----------|----------|
+| `read` | `file_path` | ❌ `path` |
+| `write` | `file_path` | ❌ `path` |
+| `edit` | `file_path`, `old_string`, `new_string` | ❌ `oldText`/`newText` |
 
-### 常见错误
-- `write missing required args: file_path` → 用了 `path`，改成 `file_path`
-- `old_string not found` → 复制原文，注意空格换行
+**Golden Rule**: 统一用 `file_path`，不用 `path`
 
 ## 大输出处理
 
-- <100 行：直接输出
-- 100-500 行：用 `head -N` 或 `tail -N`
-- >500 行：落盘再读 `command > /tmp/result.txt`
-
-## Token 节省
-
-- 不说废话："Great question!" "Let me..."
-- 工具调用不叙述，直接执行
-- 长内容发文件，不贴文字
-- Output 比 Input 贵 5 倍，精简回复 ROI 最高
+- 大文件用 `limit`/`offset` 分段读取
+- 长命令输出用 `| head -50` 截断
+- 不确定大小就落盘：`command > /tmp/result.txt`
 
 ## Skill 设计
 
-- **Progressive Disclosure**：详细内容放 `references/`，按需加载
+- **Progressive Disclosure**：详细内容放 `references/`，不要全塞 SKILL.md
 - SKILL.md 保持精简（<100 行）
-- 用 channel ID 不用名称（名称可能改）
+- 按需加载，节省 token
 
----
+## 发送文件
 
-*最后更新: 2026-02-07*
+- Mattermost 用 `filePath` 参数发送文件
+- 比贴大段文字更高效
+- 发送成功要确认对方收到
+
+## Token 节省
+
+- Output 比 Input 贵 5 倍 → 精简回复
+- Cache Read 比 Input 便宜 10 倍 → 利用缓存
+- 不说废话："Great question!" 等删掉

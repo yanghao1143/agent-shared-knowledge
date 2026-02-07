@@ -6,40 +6,33 @@ Corrections, insights, and knowledge gaps captured during development.
 **Areas**: frontend | backend | infra | tests | docs | config
 **Statuses**: pending | in_progress | resolved | wont_fix | promoted | promoted_to_skill
 
-## Status Definitions
+---
 
-| Status | Meaning |
-|--------|---------|
-| `pending` | Not yet addressed |
-| `in_progress` | Actively being worked on |
-| `resolved` | Issue fixed or knowledge integrated |
-| `wont_fix` | Decided not to address (reason in Resolution) |
-| `promoted` | Elevated to CLAUDE.md, AGENTS.md, or copilot-instructions.md |
-| `promoted_to_skill` | Extracted as a reusable skill |
+## [LRN-20260207-001] correction
 
-## Skill Extraction Fields
-
-When a learning is promoted to a skill, add these fields:
-
-```markdown
-**Status**: promoted_to_skill
-**Skill-Path**: skills/skill-name
-```
-
-Example:
-```markdown
-## [LRN-20250115-001] best_practice
-
-**Logged**: 2025-01-15T10:00:00Z
+**Logged**: 2026-02-07T11:44:00+08:00
 **Priority**: high
-**Status**: promoted_to_skill
-**Skill-Path**: skills/docker-m1-fixes
-**Area**: infra
+**Status**: resolved
+**Area**: config
 
 ### Summary
-Docker build fails on Apple Silicon due to platform mismatch
-...
-```
+不应该在工具调用时说 "There is a tool use."
+
+### Details
+在调用工具时，我会说 "There is a tool use." 作为过渡语。这是不必要的，违反了 AGENTS.md 中的 Tool Call Style 指导：
+- 常规、低风险的工具调用应该直接执行，不需要叙述
+- 只在多步骤工作、复杂问题、敏感操作时才需要叙述
+
+### Suggested Action
+直接调用工具，不要说 "There is a tool use."
+
+### Resolution
+- **Resolved**: 2026-02-07T11:44:00+08:00
+- **Notes**: 已理解并修正行为。工具调用应该静默执行，除非需要解释。
+
+### Metadata
+- Source: user_feedback (via @haodaer 总结)
+- Tags: tool-calling, style, narration
 
 ---
 
